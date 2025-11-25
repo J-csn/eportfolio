@@ -7,6 +7,11 @@
     <title>Mon Site Web</title>
     
     <style>
+        :root { 
+            --main-color: #2a6fc5; /*4CAF50*/
+            --mouse-on-color: #205697; /*4CAF50*/
+            --font-size: 16px;
+        }
         .container {
             display: flex;
             justify-content: space-between;
@@ -20,7 +25,7 @@
         }
 
         header {
-            background-color: #4CAF50;
+            background-color: var(--main-color);
             color: white;
             padding: 10px;
             text-align: center; 
@@ -43,19 +48,135 @@
 
         button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: var(--main-color);
             color: white;
             border: none;
             cursor: pointer;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: var(--mouse-on-color);
         }
 
+        /* LINK (UNUSED) */
+        .link {
+            text-decoration: none;
+            color: var(--main-color);
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .link:hover {
+            color: var(--mouse-on-color); /* couleur plus claire */
+        }
+
+        main {
+        display: none;
+        }
+
+        main.active {
+            display: block;
+        }
         .active {
             display: block; /* Affiche la section active */
         }
+
+        /* PAGE TITLE */
+        .page-title {
+            font-size: 2.5em;
+            color: var(--main-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* DOWNLOAD BUTTON */
+        .btn-download {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4em; /* utilise em pour que l'espace suive la taille de la police */
+            padding: 0.4em 1em; /* padding en em pour qu'il scale aussi */
+            border: 1px solid #d3d3d3;
+            border-radius: 2px;
+            background: #ffffff;
+            color: #444;
+            font-size: 1.25rem; 
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-download:hover {
+            background: #f8f8f8;
+            border-color: #bfbfbf;
+        }
+
+        .btn-download::after {
+            content: "";
+            display: inline-block;
+            width: 1em;    /* largeur dépend taille police */
+            height: 1em;   /* hauteur dépend taille police */
+            background-size: contain;
+            background-repeat: no-repeat;
+
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7 10 12 15 17 10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
+        }
+
+        /* USE LINK BUTTON */
+        .btn-uselink {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.5em 1.2em;
+            border: none;
+            border-radius: 2px;
+            background: var(--main-color); /* couleur orange similaire à ton image */
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-uselink:hover {
+            background: var(--mouse-on-color);
+        }
+
+        .btn-uselink::after {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3Cpolyline points='12 5 19 12 12 19'/%3E%3C/svg%3E");
+        }
+
+        /* WELCOME IMAGE */
+        .top-right {
+            background-image: url('code_eportfolio.png'); /* Remplace par ton image */
+            background-repeat: no-repeat;             /* Pas de répétition */
+            background-position: top right;           /* Coin haut droit */
+            background-size: 50% 80%; /* 50% largeur, 80% hauteur */
+            padding-right: 50%; 
+        }
+
+        /* RIGHT SIDE IMAGE */
+        .image-right {
+            position: fixed;
+            right: 10px;
+            width: 200px;
+        }
+
+        /* LEFT SIDE IMAGE */
+        .image-left {
+            position: fixed;
+            left: 10px;
+            width: 200px;
+        }
+
     </style>
 </head>
 <body>
@@ -63,7 +184,7 @@
     <header>
         <div class="container">
             <h1>eportfolio</h1>
-            <button onclick="switchTab('accueil')">Welcome</button>
+            <button onclick="switchTab('acceuil')">Welcome</button>
             <button onclick="switchTab('engineering')">Engineering course</button>
             <button onclick="switchTab('mobility')">International Mobility</button>
             <button onclick="switchTab('sustainability')">Sustainability & Civic Engagement</button>
@@ -72,48 +193,136 @@
         </div>
     </header>
 
-    <main id="accueil" class="active">
-        <h2>Welcome</h2>
-        
+    <main id="acceuil" class="active top-right" style="text-align: center;">
+        <h2 class="page-title">Welcome to My Eportfolio</h2>
+        <p style="font-size: 1.2em; color: #555; margin: 20px 0;">
+            Hi there! I'm Jérémie Crosnier. Explore my journey, my professional growth, and my experiences here.
+        </p>
+
+        <div>
+            <h3 style="font-size: 1.5em; margin-bottom: 10px;">- C.V.</h3>
+            <a class="btn-download" href="my_CV_in_english.pdf" download="CV_Jeremie_Crosnier_in_English.pdf">My CV in English</a>
+            <a class="btn-download" href="my_CV_in_french.pdf" download="CV_Jeremie_Crosnier_in_French.pdf">My CV in French</a>
+        </div>
+        <div style="margin: 30px 0;">
+            <h3 style="font-size: 1.5em; margin-bottom: 10px;">- LinkedIn</h3>
+            <a class="btn-uselink" href="https://www.linkedin.com/in/jérémie-crosnier-1a8a88330/fr/" >
+                My LinkedIn
+            </a>
+        </div>
+        <!--
+        <div style="margin: 20px auto; max-width: 480px;"> 
+            <h3 style="font-size: 1.5em; margin-bottom: 10px;">- About me</h3>
+            <video width="100%" height="auto" controls style="border-radius: 10px; box-shadow: 0px 4px 6px rgba(0,0,0,0.2);">
+                <source src="video_test.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div> -->
+
+
         <br><br><br><br><br><br>
     </main>
 
     <main id="engineering">
-        <h2>Engineering course</h2>
+        <h2 class="page-title">Engineering Course</h2>
+        <section style="margin: 20px auto; max-width: 800px; text-align: center;">
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                I'm studying in the digital sciences department at ENSEEIHT.
+                More specifically I am specialized in Software ingeniering.
+            </p>
+        </section>
     </main>
 
     <main id="mobility">
-        <h2>International Mobility</h2>
+
+        <img src="drapeau_francais.jpg" alt="7Fault's logo" class="image-left">
+        <img src="drapeau_allemand.jpg" alt="7Fault's logo" class="image-right">
+
+        <h2 class="page-title">International Mobility</h2>
+        <section style="margin: 20px auto; max-width: 800px; text-align: center;">
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                I plan to complete a six-month internship in Germany during my third year. After speaking with several professionals 
+                I met during my previous internships, I became even more confident in my desire to immerse myself in German culture. 
+                Beyond improving my language skills, this internship represents an opportunity to discover a new approach to the 
+                professional world and broaden my international perspective.
+            </p>
+        </section>
     </main>
 
     <main id="sustainability">
-        <h2>Sustainability & Civic Engagement</h2>
+        <h2 class="page-title">Sustainability & Civic Engagement</h2>
+        <section style="margin: 20px auto; max-width: 800px; text-align: center;">
+
+            <img src="7FLogo-NoBG.png" alt="7Fault's logo" class="image-right">
+            <img src="7FLogo-NoBG.png" alt="7Fault's logo" class="image-left">
+
+            <h3 style="font-size: 1.8em; color: #333;">Active member of 7Fault</h3>
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                I am an active member of 7Fault, the ENSEEIHT video game creation club. 
+                More specifically, I manage the club's finances. I had the opportunity to present 7Fault at ENSEEIHT's open house in 2025.
+                This year, we have a project to make ENSEEIHT a center for organizing the Global Game Jam, an international video game development hackathon.
+            </p>
+            
+            <h3 style="font-size: 1.8em; color: #333;">Green Evolution</h3>
+            <a class="link" href="green_evolution.pdf" download="green_evolution.pdf">A copy of our group poster(PDF)</a>
+
+        </section>
+        <br><br><br><br><br><br>
     </main>
 
+
     <main id="activities">
-        <h2>Sport & other activities</h2>
+        <h2 class="page-title">Sport & Other Activities</h2>
+        
+        <section style="margin: 20px auto; max-width: 800px; text-align: center;">
+            <h3 style="font-size: 1.8em; color: #333;">Basketball</h3>
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                I played basketball for 9 years. Being part of a team taught me the joy of collaboration, 
+                self-improvement, and working towards a common goal. This experience not only helped me grow as an individual 
+                but also taught me valuable lessons about teamwork and perseverance.
+            </p>
+            <img src="basket-cover.jpg" alt="Playing basketball" style="width: 80%; max-width: 400px; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0,0,0,0.2); margin: 20px 0;">
+        </section>
+
+        <section style="margin: 40px auto; max-width: 800px; text-align: center;">
+            <h3 style="font-size: 1.8em; color: #333;">Game Development</h3>
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                <u><b>Game Jams :</b></u> I enjoy creating small video games with my friends during Game Jams. 
+                These events are always incredibly enriching, allowing me to learn, grow, 
+                and explore the fascinating world of video game development. Collaborating under time constraints 
+                sharpens my creativity and problem-solving skills, making each project a unique challenge and a rewarding experience.
+            </p>
+            <img src="game_jam.png" alt="Game development" style="width: 80%; max-width: 400px; border-radius: 15px; box-shadow: 0px 4px 6px rgba(0,0,0,0.2); margin: 20px 0;">
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                <u><b>Project with Alten Solidaire :</b></u> I also had the opportunity to work as game developer with Alten Solidaire on developing children's
+                games for the Burns and Smiles association.
+                I carried out this project with other members of 7Fault. 
+                It was a very rewarding experience in terms of team project organization and management.
+            </p>
+        </section>
+        <br><br><br><br><br><br>
     </main>
 
     <main id="career">
-        <h2>Career Development</h2>
-        <div>
-            <h3>- C.V.</h3>
-            <a href="my_CV_in_english.pdf" download="CV_Jeremie_Crosnier_in_english.pdf">My CV in english (PDF)</a><br>
-            <a href="my_CV_in_french.pdf" download="CV_Jeremie_Crosnier_in_french.pdf">My CV in french (PDF)</a>
-        </div>
-        <div>
-            <h3>- LinkedIn</h3>
-            <a href="https://www.linkedin.com/in/jérémie-crosnier-1a8a88330/fr/">
-                <!--<img src="frame.png" alt="LinkedIn" /><br>-->My LinkedIn page
-            </a>
-        </div>
-        <div>
-            <h3>- About me</h3>
-            <video width="640" height="360" controls>
-                <source src="video_test.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+        <h2 class="page-title">Career Development</h2>
+        <section style="margin: 40px auto; max-width: 800px; text-align: center;">
+            <h3 style="font-size: 1.8em; color: #333;">Internships</h3>
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                <u><b>6-week Internships at Airbus :</b></u> I did 6-week internship at Airbus in the Finance & Digital department. 
+                I had to develop a program capable of performing Monte Carlo analysis runs on Google Sheets. Above all, this project 
+                allowed me to take my first steps in professional-level IT projects and improve my 
+                ability to work independently in areas where I have little prior knowledge.
+                I personally have very fond memories of this experience.
+            </p>
+            <p style="font-size: 1.2em; color: #555; line-height: 1.6;">
+                <u><b>6-week Internships at IRIT :</b></u> I did a 6-week internship at IRIT in the field of educational gaming.
+                The goal of this internship was to create a website that would allow teachers 
+                to create exercises in the form of video games to teach their students programming. 
+                This internship allowed me to get my foot in the door of the web world in its two main 
+                aspects: frontend and backend. 
+                It was an opportunity to work as part of a team on a large project with tight deadlines.
+            </p>
+        </section>
         <br><br><br><br><br><br>
     </main>
 
